@@ -9,8 +9,8 @@ import java.net.Socket;
 public class Main {
     public static void main(String[] args) throws IOException {
         Other other = Other.loadTitle();
-        int sum;
-        String msg;
+        JSONObject messageJson = new JSONObject();
+        JSONObject titleJson = new JSONObject();
         other.loadTitle();
         Category category = new Category(null);
         category.addCategory(other.titleCategory());
@@ -23,13 +23,12 @@ public class Main {
                         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 ) {
                     String s = in.readLine();
-                    System.out.println(s);
                     JSONParser parser = new JSONParser();
                     JSONObject json = (JSONObject) parser.parse(s);
-                    msg = "{ \"maxCategory\": {\"category\": \"";
-                    sum = category.answer(other.title(json.get("title").toString()), Integer.parseInt(json.get("sum").toString()));
-                    msg += other.title(json.get("title").toString()) + " \", \"sum\": " + sum + "}}";
-                    out.println(msg);
+                    titleJson.put("category", other.title(json.get("title").toString()));
+                    titleJson.put("sum", category.answer(other.title(json.get("title").toString()), Integer.parseInt(json.get("sum").toString())));
+                    messageJson.put("maxCategory", titleJson);
+                    out.println(messageJson);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

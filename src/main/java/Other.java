@@ -9,13 +9,6 @@ public class Other {
         this.titles = title;
     }
 
-    @Override
-    public String toString() {
-        return "Other{" +
-                "titles=" + titles +
-                '}';
-    }
-
     public String titleCategory() {
         String s = "";
         for (String i : titles.keySet()) {
