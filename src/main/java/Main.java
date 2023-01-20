@@ -8,27 +8,26 @@ import java.net.Socket;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Other other = Other.loadTitle();
+        Other other = Other.loadingListProductsCategories();
         JSONObject messageJson = new JSONObject();
         JSONObject titleJson = new JSONObject();
-        other.loadTitle();
         Category category = new Category(null);
-        category.addCategory(other.titleCategory());
+        category.addingNewCategoryExistingCategories(other.creatingCategories());
         try (ServerSocket serverSocket = new ServerSocket(8989);) {
             System.out.println("Сервер запущен");
             while (true) {
                 try (
                         Socket socket = serverSocket.accept();
-                        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                        PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true);
                 ) {
-                    String s = in.readLine();
+                    String string = bufferedReader.readLine();
                     JSONParser parser = new JSONParser();
-                    JSONObject json = (JSONObject) parser.parse(s);
-                    titleJson.put("category", other.title(json.get("title").toString()));
-                    titleJson.put("sum", category.answer(other.title(json.get("title").toString()), Integer.parseInt(json.get("sum").toString())));
+                    JSONObject json = (JSONObject) parser.parse(string);
+                    titleJson.put("category", other.determiningRelationshipProductCategory(json.get("title").toString()));
+                    titleJson.put("sum", category.addingPurchaseAmountCategoryReturningTotalAmountPurchases(other.determiningRelationshipProductCategory(json.get("title").toString()), Integer.parseInt(json.get("sum").toString())));
                     messageJson.put("maxCategory", titleJson);
-                    out.println(messageJson);
+                    printWriter.println(messageJson);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

@@ -12,7 +12,7 @@ public class Category {
         this.category = category;
     }
 
-    public void addCategory(String categorys) {
+    public void addingNewCategoryExistingCategories(String categorys) {
         Map<String, Integer> newCategory = new HashMap<>();
         String[] split = categorys.split(",");
         for (String s : split) {
@@ -21,7 +21,7 @@ public class Category {
         setCategory(newCategory);
     }
 
-    public int answer(String categorys, int amount) {
+    public int addingPurchaseAmountCategoryReturningTotalAmountPurchases(String categorys, int amount) {
         category.put(categorys, category.get(categorys) + amount);
         return category.get(categorys);
     }

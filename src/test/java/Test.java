@@ -4,7 +4,7 @@ public class Test {
     @org.junit.jupiter.api.Test
     public void testAnswer() {
         Category category = new Category(null);
-        category.addCategory("еда,");
-        Assertions.assertEquals(100, category.answer("еда", 100));
+        category.addingNewCategoryExistingCategories("еда,");
+        Assertions.assertEquals(100, category.addingPurchaseAmountCategoryReturningTotalAmountPurchases("еда", 100));
     }
 }

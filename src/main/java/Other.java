@@ -9,36 +9,40 @@ public class Other {
         this.titles = title;
     }
 
-    public String titleCategory() {
-        String s = "";
-        for (String i : titles.keySet()) {
-            s += titles.get(i) + ",";
+    public String creatingCategories() {
+        String string = "";
+        for (String key : titles.keySet()) {
+            string += titles.get(key) + ",";
         }
-        return s + "другое,";
+        return string + "другое,";
     }
 
-    public String title(String t) {
-        if (titles.containsKey(t)) {
-            return titles.get(t);
+    public String determiningRelationshipProductCategory(String string) {
+        if (titles.containsKey(string)) {
+            return titles.get(string);
         } else {
             return "другое";
         }
     }
 
-    public static Other loadTitle() throws IOException {
+    public static Other loadingListProductsCategories() throws IOException {
         File file = new File("categories.tsv");
-        Map<String, String> t = new HashMap<>();
+        Map<String, String> category = new HashMap<>();
         if (file.exists()) {
-            try (InputStream in = new FileInputStream(file)) {
-                Scanner scanner = new Scanner(in);
-                for (int i = 0; i < 8; i++) {
-                    t.put(scanner.next(), scanner.next());
+            try (InputStream inputStream = new FileInputStream(file)) {
+                try {
+                    Scanner scanner = new Scanner(inputStream);
+                    for (int i = 0; i < 8; i++) {
+                        category.put(scanner.next(), scanner.next());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         } else {
             System.out.println("Нет файла categories.tsv");
         }
-        return new Other(t);
+        return new Other(category);
     }
 }
 
